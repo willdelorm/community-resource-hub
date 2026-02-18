@@ -25,7 +25,32 @@ const pageButtons = [
   },
 ];
 
-const announcements: Announcement[] = [];
+const announcements: Announcement[] = [
+  {
+    id: 1,
+    title: "Spring Resource Fair — Save the Date!",
+    content:
+      "Join us on April 12th for our annual Spring Resource Fair at Riverside Community Center. Over 30 local organizations will be on hand to share information about housing, employment, health services, and more. Free admission and open to all.",
+    dateCreated: new Date("2026-02-10"),
+    dateExpired: new Date("2026-04-12"),
+  },
+  {
+    id: 2,
+    title: "New Mental Health Resources Now Listed",
+    content:
+      "We've added 12 new mental health and counseling providers to our directory, including several that offer sliding-scale fees and same-week appointments. Head to the Resources page to explore the full list.",
+    dateCreated: new Date("2026-02-01"),
+    dateExpired: new Date("2026-06-01"),
+  },
+  {
+    id: 3,
+    title: "Volunteer With Us This Month",
+    content:
+      "We're looking for volunteers to help with data entry, community outreach, and event support throughout February and March. No experience necessary — just a willingness to help. Reach out through our Contact page to get involved.",
+    dateCreated: new Date("2026-02-05"),
+    dateExpired: new Date("2026-03-31"),
+  },
+];
 
 export default function Home() {
   return (
@@ -42,41 +67,51 @@ export default function Home() {
       </section>
       <section className="mx-auto p-6 bg-gray-200">
         <p className="text-center text-lg mx-auto">
-          This is a great hub for resources in the area.
+          Your connection to local services, support, and community — all in one place.
         </p>
       </section>
-      <section className="dark-bg p-12 mx-auto">
-        <div className="w-64 mx-auto flex flex-col justify-center items-center gap-6 z-10">
+      <section className="mx-auto w-full max-w-2xl px-6 py-12">
+        <h2 className="text-3xl font-bold text-center uppercase mb-8">
+          Announcements
+        </h2>
+        <div className="flex flex-col divide-y divide-gray-200">
+          {announcements.map((item) => (
+            <article key={item.id} className="py-6">
+              <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+              {item.content.split("\n").map((text, index) => (
+                <p key={index} className="text-gray-600">{text}</p>
+              ))}
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="dark-bg w-full py-10">
+        <div className="mx-auto flex flex-col items-center gap-4 px-6 sm:flex-row sm:justify-center">
           {pageButtons.map(({ title, link }) => (
             <Button
               asChild
               key={title}
-              className={`w-full bg-orange-400 hover:bg-yellow-400 shadow-md`}
+              className="flex-1 bg-orange-400 hover:bg-yellow-400 shadow-md"
             >
               <Link href={link}>{title}</Link>
             </Button>
           ))}
         </div>
       </section>
-      <section className="flex flex-col max-w-4xl mx-auto px-6 py-6 md:py-24">
-        <h2 className="text-3xl font-bold text-center uppercase mb-6">
-          Announcements
-        </h2>
-        {announcements.map((item) => (
-          <article key={item.id} className="mb-6">
-            <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-            {item.content.split("\n").map((text, index) => (
-              <p key={index}>{text}</p>
-            ))}
-            <hr className="border-gray-200 w-1/2 mx-auto mt-6" />
-          </article>
-        ))}
-      </section>
-      <section className="py-6 mx-auto bg-white bg-opacity-80 text-black">
-        <div className="max-w-4xl mx-auto px-6 flex justify-between items-center gap-8">
-          <h2 className="text-3xl font-regular w-3/5">Support us!</h2>
-          <Button asChild className="w-32 bg-orange-400 hover:bg-yellow-400">
-            <Link href="/donate">DONATE</Link>
+      <section className="w-full bg-sky-800 py-16">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-6 text-center">
+          <h2 className="text-4xl font-black uppercase text-white drop-shadow">
+            Support Our Mission
+          </h2>
+          <p className="max-w-lg text-lg text-gray-300">
+            Your contribution helps us keep resources up to date and reach more
+            people in need across our community.
+          </p>
+          <Button
+            asChild
+            className="mt-2 bg-orange-400 px-8 py-5 text-base font-bold text-white shadow-lg hover:bg-yellow-400"
+          >
+            <Link href="/donate">Donate Today</Link>
           </Button>
         </div>
       </section>

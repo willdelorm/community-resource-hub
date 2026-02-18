@@ -3,7 +3,6 @@ import Image from "next/image";
 interface Profile {
   name: string;
   pronouns: string;
-  team: string;
   position: string;
   description: string;
   photo: string;

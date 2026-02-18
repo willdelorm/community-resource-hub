@@ -2,42 +2,36 @@
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-slate-300 p-6 text-md">
-      <div className="w-full max-w-2xl mx-auto">
-        <h2 className="text-xl mb-6">CommonGround Collective</h2>
-        <div className=" w-full grid grid-cols-2">
-          <div>
-            <div>
-              <a href="/events">Events</a>
-            </div>
-            <div>
-              <a href="/resources">Resources</a>
-            </div>
-            <div>
-              <a href="/about">About</a>
-              <ul className="ps-3">
-                <li>
-                  <a href="/about/story">Story</a>
-                </li>
-                <li>
-                  <a href="/about/people">People</a>
-                </li>
-                <li>
-                  <a href="/about/contact">Contact</a>
-                </li>
-              </ul>
-            </div>
+    <footer className="w-full bg-gray-300 text-gray-600">
+      <div className="mx-auto max-w-2xl px-6 py-12">
+        <div className="mb-8">
+          <h2 className="text-xl font-black uppercase tracking-wide text-gray-900">
+            CommonGround Collective
+          </h2>
+          <p className="mt-1 text-sm text-gray-600">
+            Connecting people with community resources.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 gap-8 border-t border-gray-400 pt-8">
+          <div className="flex flex-col gap-1">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-600">
+              Explore
+            </p>
+            <a href="/events" className="text-sm hover:text-gray-900 transition-colors">Events</a>
+            <a href="/resources" className="text-sm hover:text-gray-900 transition-colors">Resources</a>
+            <a href="/donate" className="text-sm hover:text-gray-900 transition-colors">Donate</a>
           </div>
-          <div>
-            <div>
-              <a href="/donate">Donate</a>
-            </div>
-            <div className="mb-6">
-              <a href="/signin">Sign In</a>
-            </div>
+          <div className="flex flex-col gap-1">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-600">
+              About
+            </p>
+            <a href="/about/story" className="text-sm hover:text-gray-900 transition-colors">Story</a>
+            <a href="/about/people" className="text-sm hover:text-gray-900 transition-colors">People</a>
+            <a href="/about/contact" className="text-sm hover:text-gray-900 transition-colors">Contact</a>
+            <a href="/signin" className="text-sm hover:text-gray-900 transition-colors">Sign In</a>
           </div>
         </div>
-        <div className="text-center">
+        <div className="mt-8 border-t border-gray-400 pt-6 text-center text-xs text-gray-500">
           <p>Created by Will Delorm</p>
         </div>
       </div>

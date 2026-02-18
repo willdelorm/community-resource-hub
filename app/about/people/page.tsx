@@ -1,13 +1,25 @@
 import PeopleBio from "@/components/PeopleBio";
 
 const peopleProfiles = [
-  // TODO: Replace with placeholder people
   {
-    name: "Name",
-    pronouns: "They/He",
-    team: "leadership",
-    position: "Position",
-    description: "Description",
+    name: "Alex Rivera",
+    pronouns: "They/Them",
+    position: "Executive Director",
+    description: "Alex has been working in community organizing for over a decade, connecting residents with essential services and advocating for equitable access to resources.",
+    photo: "/145857007_307ce493-b254-4b2d-8ba4-d12c080d6651.svg",
+  },
+  {
+    name: "Jordan Kim",
+    pronouns: "She/Her",
+    position: "Program Manager",
+    description: "Jordan oversees the development and coordination of community programs, ensuring every initiative is inclusive, impactful, and responsive to local needs.",
+    photo: "/145857007_307ce493-b254-4b2d-8ba4-d12c080d6651.svg",
+  },
+  {
+    name: "Marcus Thompson",
+    pronouns: "He/Him",
+    position: "Outreach Coordinator",
+    description: "Marcus builds relationships across neighborhoods and partner organizations, making sure community members know about and can access the resources available to them.",
     photo: "/145857007_307ce493-b254-4b2d-8ba4-d12c080d6651.svg",
   },
 ];
@@ -25,7 +37,6 @@ const People = () => {
           Team Name
         </h2>
         {peopleProfiles
-          .filter((profile) => profile.team === "leadership")
           .map((profile, index) => (
             <PeopleBio key={index} profile={profile} />
           ))}
