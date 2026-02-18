@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import NavMenu from "./NavMenu";
 
-// TODO: Add mobile menu
 const Navbar = () => {
   return (
     <header className="w-full">
