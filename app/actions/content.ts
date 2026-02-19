@@ -12,6 +12,7 @@ import {
   updateEvent,
   updateResource,
 } from "@/lib/supabase/queries";
+import { isDemoUser } from "@/lib/supabase/demo";
 import type {
   AnnouncementInsert,
   AnnouncementUpdate,
@@ -28,6 +29,7 @@ type ActionResult = { success: true } | { error: string };
 export async function createResourceAction(
   data: ResourceInsert,
 ): Promise<ActionResult> {
+  if (await isDemoUser()) return { error: "Demo accounts are read-only." };
   try {
     await createResource(data);
     revalidatePath("/dashboard");
@@ -41,6 +43,7 @@ export async function updateResourceAction(
   id: string,
   data: ResourceUpdate,
 ): Promise<ActionResult> {
+  if (await isDemoUser()) return { error: "Demo accounts are read-only." };
   try {
     await updateResource(id, data);
     revalidatePath("/dashboard");
@@ -52,6 +55,7 @@ export async function updateResourceAction(
 }
 
 export async function deleteResourceAction(id: string): Promise<ActionResult> {
+  if (await isDemoUser()) return { error: "Demo accounts are read-only." };
   try {
     await deleteResource(id);
     revalidatePath("/dashboard");
@@ -65,6 +69,7 @@ export async function deleteResourceAction(id: string): Promise<ActionResult> {
 export async function createAnnouncementAction(
   data: AnnouncementInsert,
 ): Promise<ActionResult> {
+  if (await isDemoUser()) return { error: "Demo accounts are read-only." };
   try {
     await createAnnouncement(data);
     revalidatePath("/dashboard");
@@ -78,6 +83,7 @@ export async function updateAnnouncementAction(
   id: string,
   data: AnnouncementUpdate,
 ): Promise<ActionResult> {
+  if (await isDemoUser()) return { error: "Demo accounts are read-only." };
   try {
     await updateAnnouncement(id, data);
     revalidatePath("/dashboard");
@@ -89,6 +95,7 @@ export async function updateAnnouncementAction(
 }
 
 export async function deleteAnnouncementAction(id: string): Promise<ActionResult> {
+  if (await isDemoUser()) return { error: "Demo accounts are read-only." };
   try {
     await deleteAnnouncement(id);
     revalidatePath("/dashboard");
@@ -102,6 +109,7 @@ export async function deleteAnnouncementAction(id: string): Promise<ActionResult
 export async function createEventAction(
   data: EventInsert,
 ): Promise<ActionResult> {
+  if (await isDemoUser()) return { error: "Demo accounts are read-only." };
   try {
     await createEvent(data);
     revalidatePath("/dashboard");
@@ -115,6 +123,7 @@ export async function updateEventAction(
   id: string,
   data: EventUpdate,
 ): Promise<ActionResult> {
+  if (await isDemoUser()) return { error: "Demo accounts are read-only." };
   try {
     await updateEvent(id, data);
     revalidatePath("/dashboard");
@@ -126,6 +135,7 @@ export async function updateEventAction(
 }
 
 export async function deleteEventAction(id: string): Promise<ActionResult> {
+  if (await isDemoUser()) return { error: "Demo accounts are read-only." };
   try {
     await deleteEvent(id);
     revalidatePath("/dashboard");

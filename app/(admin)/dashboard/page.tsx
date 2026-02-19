@@ -17,6 +17,7 @@ import {
   getAllEvents,
   getAllResources,
 } from "@/lib/supabase/queries";
+import { isDemoUser } from "@/lib/supabase/demo";
 import type { Announcement, Event, Resource } from "@/lib/supabase/types";
 import Link from "next/link";
 
@@ -91,10 +92,11 @@ const eventColumns: Column<Event>[] = [
 ];
 
 const Dashboard = async () => {
-  const [resources, announcements, events] = await Promise.all([
+  const [resources, announcements, events, isDemo] = await Promise.all([
     getAllResources(),
     getAllAnnouncements(),
     getAllEvents(),
+    isDemoUser(),
   ]);
 
   return (
@@ -120,7 +122,7 @@ const Dashboard = async () => {
           />
         </CardContent>
         <CardFooter className="flex justify-between">
-          <NewResourceModal />
+          {!isDemo && <NewResourceModal />}
           <Link
             href="/dashboard/resources"
             className="text-sm text-slate-500 hover:text-slate-800 transition-colors"
@@ -142,7 +144,7 @@ const Dashboard = async () => {
           />
         </CardContent>
         <CardFooter className="flex justify-between">
-          <NewAnnouncementModal />
+          {!isDemo && <NewAnnouncementModal />}
           <Link
             href="/dashboard/announcements"
             className="text-sm text-slate-500 hover:text-slate-800 transition-colors"
@@ -164,7 +166,7 @@ const Dashboard = async () => {
           />
         </CardContent>
         <CardFooter className="flex justify-between">
-          <NewEventModal />
+          {!isDemo && <NewEventModal />}
           <Link
             href="/dashboard/events"
             className="text-sm text-slate-500 hover:text-slate-800 transition-colors"

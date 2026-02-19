@@ -17,9 +17,15 @@ const headings: Record<View, { title: string; subtitle: string }> = {
   },
 };
 
-const SignInCard = () => {
+type SignInCardProps = {
+  demoEmail?: string;
+  demoPassword?: string;
+};
+
+const SignInCard = ({ demoEmail, demoPassword }: SignInCardProps) => {
   const [view, setView] = useState<View>("login");
   const { title, subtitle } = headings[view];
+  const showDemo = !!(demoEmail && demoPassword);
 
   return (
     <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
@@ -34,6 +40,24 @@ const SignInCard = () => {
         <LoginForm onForgotPassword={() => setView("recovery")} />
       ) : (
         <RecoveryForm onBack={() => setView("login")} />
+      )}
+
+      {showDemo && (
+        <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-amber-700 mb-2">
+            Demo Access
+          </p>
+          <div className="space-y-1 text-sm text-amber-900">
+            <div className="flex justify-between">
+              <span className="text-amber-600">Email</span>
+              <span className="font-mono">{demoEmail}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-amber-600">Password</span>
+              <span className="font-mono">{demoPassword}</span>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

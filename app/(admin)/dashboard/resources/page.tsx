@@ -5,6 +5,7 @@ import { NewResourceModal } from "@/components/dashboard/NewResourceModal";
 import { deleteResourceAction } from "@/app/actions/content";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAllResources } from "@/lib/supabase/queries";
+import { isDemoUser } from "@/lib/supabase/demo";
 import type { Resource } from "@/lib/supabase/types";
 import Link from "next/link";
 
@@ -16,7 +17,7 @@ function formatDate(dateString: string) {
   }).format(new Date(dateString));
 }
 
-const resourceColumns = (resources: Resource[]): Column<Resource>[] => [
+const resourceColumns = (isDemo: boolean): Column<Resource>[] => [
   {
     header: "Name",
     cell: (row) => <span className="font-medium">{row.name}</span>,
@@ -57,23 +58,30 @@ const resourceColumns = (resources: Resource[]): Column<Resource>[] => [
     cell: (row) => formatDate(row.created_at),
     className: "text-slate-500",
   },
-  {
-    header: "",
-    cell: (row) => (
-      <div className="flex items-center gap-1 justify-end">
-        <EditResourceModal resource={row} />
-        <DeleteButton
-          action={deleteResourceAction.bind(null, row.id)}
-          label="resource"
-        />
-      </div>
-    ),
-  },
+  ...(!isDemo
+    ? [
+        {
+          header: "",
+          cell: (row: Resource) => (
+            <div className="flex items-center gap-1 justify-end">
+              <EditResourceModal resource={row} />
+              <DeleteButton
+                action={deleteResourceAction.bind(null, row.id)}
+                label="resource"
+              />
+            </div>
+          ),
+        } satisfies Column<Resource>,
+      ]
+    : []),
 ];
 
 const ResourcesPage = async () => {
-  const resources = await getAllResources();
-  const columns = resourceColumns(resources);
+  const [resources, isDemo] = await Promise.all([
+    getAllResources(),
+    isDemoUser(),
+  ]);
+  const columns = resourceColumns(isDemo);
 
   return (
     <div className="flex flex-col gap-6">
@@ -92,7 +100,7 @@ const ResourcesPage = async () => {
             {resources.length} {resources.length === 1 ? "resource" : "resources"} total
           </p>
         </div>
-        <NewResourceModal />
+        {!isDemo && <NewResourceModal />}
       </div>
 
       <hr className="border-slate-300" />

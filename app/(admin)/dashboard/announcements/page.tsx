@@ -5,6 +5,7 @@ import { NewAnnouncementModal } from "@/components/dashboard/NewAnnouncementModa
 import { deleteAnnouncementAction } from "@/app/actions/content";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAllAnnouncements } from "@/lib/supabase/queries";
+import { isDemoUser } from "@/lib/supabase/demo";
 import type { Announcement } from "@/lib/supabase/types";
 import Link from "next/link";
 
@@ -16,7 +17,7 @@ function formatDate(dateString: string) {
   }).format(new Date(dateString));
 }
 
-const announcementColumns = (announcements: Announcement[]): Column<Announcement>[] => [
+const announcementColumns = (isDemo: boolean): Column<Announcement>[] => [
   {
     header: "Title",
     cell: (row) => <span className="font-medium">{row.title}</span>,
@@ -44,23 +45,30 @@ const announcementColumns = (announcements: Announcement[]): Column<Announcement
     cell: (row) => formatDate(row.created_at),
     className: "text-slate-500 whitespace-nowrap",
   },
-  {
-    header: "",
-    cell: (row) => (
-      <div className="flex items-center gap-1 justify-end">
-        <EditAnnouncementModal announcement={row} />
-        <DeleteButton
-          action={deleteAnnouncementAction.bind(null, row.id)}
-          label="announcement"
-        />
-      </div>
-    ),
-  },
+  ...(!isDemo
+    ? [
+        {
+          header: "",
+          cell: (row: Announcement) => (
+            <div className="flex items-center gap-1 justify-end">
+              <EditAnnouncementModal announcement={row} />
+              <DeleteButton
+                action={deleteAnnouncementAction.bind(null, row.id)}
+                label="announcement"
+              />
+            </div>
+          ),
+        } satisfies Column<Announcement>,
+      ]
+    : []),
 ];
 
 const AnnouncementsPage = async () => {
-  const announcements = await getAllAnnouncements();
-  const columns = announcementColumns(announcements);
+  const [announcements, isDemo] = await Promise.all([
+    getAllAnnouncements(),
+    isDemoUser(),
+  ]);
+  const columns = announcementColumns(isDemo);
 
   return (
     <div className="flex flex-col gap-6">
@@ -80,7 +88,7 @@ const AnnouncementsPage = async () => {
             {announcements.length === 1 ? "announcement" : "announcements"} total
           </p>
         </div>
-        <NewAnnouncementModal />
+        {!isDemo && <NewAnnouncementModal />}
       </div>
 
       <hr className="border-slate-300" />

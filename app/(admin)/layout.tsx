@@ -1,5 +1,6 @@
 import LogoutButton from "@/components/LogoutButton";
 import { createClient } from "@/lib/supabase/server";
+import { isDemoUser } from "@/lib/supabase/demo";
 import Link from "next/link";
 
 export default async function AdminLayout({
@@ -10,6 +11,7 @@ export default async function AdminLayout({
   const supabase = await createClient();
   const { data } = await supabase.auth.getClaims();
   const isSignedIn = !!data?.claims;
+  const isDemo = isSignedIn && (await isDemoUser());
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-100 font-sans">
@@ -37,6 +39,16 @@ export default async function AdminLayout({
           </div>
         </div>
       </header>
+
+      {isDemo && (
+        <div className="bg-amber-50 border-b border-amber-200">
+          <div className="max-w-7xl mx-auto px-6 py-2 flex items-center gap-2 text-sm text-amber-800">
+            <span className="font-semibold">Demo mode</span>
+            <span className="text-amber-600">—</span>
+            <span>You&apos;re viewing a read-only preview. All edits are disabled.</span>
+          </div>
+        </div>
+      )}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-8">
         {children}

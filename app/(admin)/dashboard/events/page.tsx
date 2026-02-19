@@ -5,6 +5,7 @@ import { NewEventModal } from "@/components/dashboard/NewEventModal";
 import { deleteEventAction } from "@/app/actions/content";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAllEvents } from "@/lib/supabase/queries";
+import { isDemoUser } from "@/lib/supabase/demo";
 import type { Event } from "@/lib/supabase/types";
 import Link from "next/link";
 
@@ -16,7 +17,7 @@ function formatDate(dateString: string) {
   }).format(new Date(dateString));
 }
 
-const eventColumns = (events: Event[]): Column<Event>[] => [
+const eventColumns = (isDemo: boolean): Column<Event>[] => [
   {
     header: "Title",
     cell: (row) => <span className="font-medium">{row.title}</span>,
@@ -53,23 +54,30 @@ const eventColumns = (events: Event[]): Column<Event>[] => [
         <span className="text-slate-400">—</span>
       ),
   },
-  {
-    header: "",
-    cell: (row) => (
-      <div className="flex items-center gap-1 justify-end">
-        <EditEventModal event={row} />
-        <DeleteButton
-          action={deleteEventAction.bind(null, row.id)}
-          label="event"
-        />
-      </div>
-    ),
-  },
+  ...(!isDemo
+    ? [
+        {
+          header: "",
+          cell: (row: Event) => (
+            <div className="flex items-center gap-1 justify-end">
+              <EditEventModal event={row} />
+              <DeleteButton
+                action={deleteEventAction.bind(null, row.id)}
+                label="event"
+              />
+            </div>
+          ),
+        } satisfies Column<Event>,
+      ]
+    : []),
 ];
 
 const EventsPage = async () => {
-  const events = await getAllEvents();
-  const columns = eventColumns(events);
+  const [events, isDemo] = await Promise.all([
+    getAllEvents(),
+    isDemoUser(),
+  ]);
+  const columns = eventColumns(isDemo);
 
   return (
     <div className="flex flex-col gap-6">
@@ -88,7 +96,7 @@ const EventsPage = async () => {
             {events.length} {events.length === 1 ? "event" : "events"} total
           </p>
         </div>
-        <NewEventModal />
+        {!isDemo && <NewEventModal />}
       </div>
 
       <hr className="border-slate-300" />
