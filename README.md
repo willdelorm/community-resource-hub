@@ -164,8 +164,8 @@ Server components and server actions are best covered by E2E tests. Mock them at
 
 ## Roadmap
 
-- [ ] Events calendar integration
-- [ ] Searchable/filterable resource table
+- [x] Events calendar integration
+- [x] Searchable/filterable resource table
 - [ ] Contact form backend (email or database)
 - [x] Admin sign-in and CMS editing interface
 - [x] Full CRUD for resources, announcements, and events
