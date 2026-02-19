@@ -1,14 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { getActiveAnnouncements } from "@/lib/supabase/queries";
 import Image from "next/image";
 import Link from "next/link";
-
-interface Announcement {
-  id: number;
-  title: string;
-  content: string;
-  dateCreated: Date;
-  dateExpired: Date;
-}
 
 const pageButtons = [
   {
@@ -25,34 +18,9 @@ const pageButtons = [
   },
 ];
 
-const announcements: Announcement[] = [
-  {
-    id: 1,
-    title: "Spring Resource Fair — Save the Date!",
-    content:
-      "Join us on April 12th for our annual Spring Resource Fair at Riverside Community Center. Over 30 local organizations will be on hand to share information about housing, employment, health services, and more. Free admission and open to all.",
-    dateCreated: new Date("2026-02-10"),
-    dateExpired: new Date("2026-04-12"),
-  },
-  {
-    id: 2,
-    title: "New Mental Health Resources Now Listed",
-    content:
-      "We've added 12 new mental health and counseling providers to our directory, including several that offer sliding-scale fees and same-week appointments. Head to the Resources page to explore the full list.",
-    dateCreated: new Date("2026-02-01"),
-    dateExpired: new Date("2026-06-01"),
-  },
-  {
-    id: 3,
-    title: "Volunteer With Us This Month",
-    content:
-      "We're looking for volunteers to help with data entry, community outreach, and event support throughout February and March. No experience necessary — just a willingness to help. Reach out through our Contact page to get involved.",
-    dateCreated: new Date("2026-02-05"),
-    dateExpired: new Date("2026-03-31"),
-  },
-];
-
-export default function Home() {
+export default async function Home() {
+  const announcements = (await getActiveAnnouncements()).slice(0, 3);
+  
   return (
     <main className="w-full">
       <section className="h-96 w-full flex justify-center items-center relative">
@@ -67,7 +35,8 @@ export default function Home() {
       </section>
       <section className="mx-auto p-6 bg-gray-200">
         <p className="text-center text-lg mx-auto">
-          Your connection to local services, support, and community — all in one place.
+          Your connection to local services, support, and community — all in one
+          place.
         </p>
       </section>
       <section className="mx-auto w-full max-w-2xl px-6 py-12">
@@ -79,7 +48,9 @@ export default function Home() {
             <article key={item.id} className="py-6">
               <h3 className="text-xl font-bold mb-2">{item.title}</h3>
               {item.content.split("\n").map((text, index) => (
-                <p key={index} className="text-gray-600">{text}</p>
+                <p key={index} className="text-gray-600">
+                  {text}
+                </p>
               ))}
             </article>
           ))}

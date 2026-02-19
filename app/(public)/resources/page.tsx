@@ -1,4 +1,9 @@
+import { ResourcesTable } from "@/components/ResourcesTable";
+import { getActiveResources } from "@/lib/supabase/queries";
+
 export default async function Resources() {
+  const resources = await getActiveResources();
+
   return (
     <main className="w-full">
       <section className="flex justify-center items-center py-12">
@@ -12,13 +17,8 @@ export default async function Resources() {
           the area.
         </p>
       </section>
-      <section className="px-6 mb-3">
-        {/* TODO: Update and add table */}
-        {/* <ClientTable
-            data={filteredData}
-            tags={tags}
-            tableType="organizations"
-          /> */}
+      <section className="px-6 mb-6">
+        <ResourcesTable resources={resources} />
       </section>
       <section className="px-6 mb-6 md:mb-24 text-center">
         <p>
