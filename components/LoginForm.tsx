@@ -1,37 +1,47 @@
 "use client";
 
+import { signIn } from "@/app/actions/auth";
 import FormInput from "@/components/FormInput";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 type LoginFormProps = {
   onForgotPassword: () => void;
 };
 
 const LoginForm = ({ onForgotPassword }: LoginFormProps) => {
-  const [formData, setFormData] = useState({ username: "", password: "" });
-
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   const handleSubmit: React.SubmitEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    console.log("Admin login submitted:", formData);
+    setError(null);
+    startTransition(async () => {
+      const result = await signIn(email, password);
+      if (result?.error) setError(result.error);
+    });
   };
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+      {error && (
+        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2">
+          {error}
+        </p>
+      )}
+
       <FormInput
-        id="username"
-        label="Username"
-        name="username"
-        type="text"
-        autoComplete="username"
+        id="email"
+        label="Email"
+        name="email"
+        type="email"
+        autoComplete="email"
         required
-        value={formData.username}
-        onChange={handleChange}
-        placeholder="admin"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="admin@example.com"
       />
 
       <FormInput
@@ -41,8 +51,8 @@ const LoginForm = ({ onForgotPassword }: LoginFormProps) => {
         type="password"
         autoComplete="current-password"
         required
-        value={formData.password}
-        onChange={handleChange}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         placeholder="••••••••"
       />
 
@@ -56,8 +66,8 @@ const LoginForm = ({ onForgotPassword }: LoginFormProps) => {
         </button>
       </div>
 
-      <Button type="submit" size="lg" className="w-full">
-        Log In
+      <Button type="submit" size="lg" className="w-full" disabled={isPending}>
+        {isPending ? "Signing in…" : "Log In"}
       </Button>
     </form>
   );

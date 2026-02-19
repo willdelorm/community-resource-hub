@@ -1,10 +1,16 @@
+import LogoutButton from "@/components/LogoutButton";
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+  const isSignedIn = !!data?.claims;
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-100 font-sans">
       <header className="bg-slate-900 text-white">
@@ -17,12 +23,18 @@ export default function AdminLayout({
               Admin
             </span>
           </div>
-          <Link
-            href="/"
-            className="text-xs text-slate-400 hover:text-white transition-colors"
-          >
-            ← Back to site
-          </Link>
+          <div className="flex items-center gap-4">
+            {isSignedIn ? (
+              <LogoutButton />
+            ) : (
+              <Link
+                href="/"
+                className="text-xs text-slate-400 hover:text-white transition-colors"
+              >
+                ← Back to site
+              </Link>
+            )}
+          </div>
         </div>
       </header>
 
