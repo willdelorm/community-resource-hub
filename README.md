@@ -12,7 +12,7 @@ Built with Next.js, TypeScript, and Tailwind CSS.
 - **Team & Story Pages** — About section with organization history and team profiles
 - **Donation Page** — Links to PayPal, Venmo, and Ko-fi for community support
 - **Responsive Design** — Mobile-first layout with a collapsible navigation menu
-- **Admin Dashboard** — Password-protected CMS for managing resources, announcements, and events
+- **Admin Dashboard** — Password-protected CMS with full CRUD for resources, announcements, and events
 
 ## Tech Stack
 
@@ -66,9 +66,13 @@ community-resource-hub/
 │   │   └── donate/           # Donation options
 │   ├── (admin)/              # Admin route group (auth required)
 │   │   ├── signin/           # Admin sign-in page
-│   │   └── dashboard/        # CMS dashboard
+│   │   └── dashboard/        # CMS dashboard overview
+│   │       ├── announcements/ # Announcements management page
+│   │       ├── events/        # Events management page
+│   │       └── resources/     # Resources management page
 │   ├── actions/
-│   │   └── auth.ts           # Server actions: signIn, signOut, sendPasswordReset
+│   │   ├── auth.ts           # Server actions: signIn, signOut, sendPasswordReset
+│   │   └── content.ts        # Server actions: CRUD for resources, announcements, events
 │   └── auth/
 │       └── callback/         # Supabase auth callback (email links)
 ├── components/               # Shared React components
@@ -78,17 +82,29 @@ community-resource-hub/
 │   ├── LogoutButton.tsx
 │   ├── Navbar.tsx
 │   ├── Footer.tsx
+│   ├── dashboard/            # Admin dashboard components
+│   │   ├── DashboardTable.tsx
+│   │   ├── DeleteButton.tsx
+│   │   ├── NewResourceModal.tsx
+│   │   ├── EditResourceModal.tsx
+│   │   ├── NewAnnouncementModal.tsx
+│   │   ├── EditAnnouncementModal.tsx
+│   │   ├── NewEventModal.tsx
+│   │   └── EditEventModal.tsx
 │   └── ui/                   # shadcn UI primitives
 ├── lib/
 │   ├── supabase/
 │   │   ├── client.ts         # Browser Supabase client
 │   │   ├── server.ts         # Server Supabase client
-│   │   └── proxy.ts          # Middleware session helper
+│   │   ├── proxy.ts          # Middleware session helper
+│   │   ├── queries.ts        # Database CRUD functions
+│   │   └── types.ts          # Database row/insert/update types
 │   └── utils.ts
 ├── middleware.ts              # Route protection (redirects /dashboard → /signin)
 └── tests/
     ├── setup.ts              # jest-dom global matchers
-    ├── components/           # React Testing Library tests
+    ├── components/           # React Testing Library component tests
+    ├── unit/                 # Vitest unit tests (actions, queries)
     └── e2e/                  # Playwright end-to-end tests
 ```
 
@@ -127,8 +143,8 @@ npm run test:e2e:ui     # interactive UI
 | Path | Framework | What it covers |
 |---|---|---|
 | `tests/components/` | Vitest + RTL | Client component rendering and interactions |
-| `tests/unit/` | Vitest | Utilities and pure functions |
-| `tests/e2e/` | Playwright | Full page flows (auth redirect, form submission, etc.) |
+| `tests/unit/` | Vitest | Database queries and server actions |
+| `tests/e2e/` | Playwright | Full page flows (auth redirect, dashboard CRUD, etc.) |
 
 Server components and server actions are best covered by E2E tests. Mock them at the boundary in component tests using `vi.mock`.
 
@@ -152,5 +168,7 @@ Server components and server actions are best covered by E2E tests. Mock them at
 - [ ] Searchable/filterable resource table
 - [ ] Contact form backend (email or database)
 - [x] Admin sign-in and CMS editing interface
+- [x] Full CRUD for resources, announcements, and events
+- [x] Supabase database schema and typed query layer
 - [x] Supabase authentication
 - [x] Unit and E2E test suite
