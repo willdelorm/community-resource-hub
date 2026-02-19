@@ -6,6 +6,7 @@ vi.mock("@/lib/supabase/server", () => ({
 
 import {
   createAnnouncement,
+  createContactSubmission,
   createEvent,
   createResource,
   deleteAnnouncement,
@@ -25,7 +26,7 @@ import {
   updateResource,
 } from "@/lib/supabase/queries";
 import { createClient } from "@/lib/supabase/server";
-import type { Announcement, Event, Resource } from "@/lib/supabase/types";
+import type { Announcement, ContactSubmission, Event, Resource } from "@/lib/supabase/types";
 
 // ---------------------------------------------------------------------------
 // Mock helpers
@@ -451,5 +452,39 @@ describe("deleteEvent", () => {
   it("throws on error", async () => {
     setupClient({ data: null, error: dbError });
     await expect(deleteEvent("e1")).rejects.toThrow("DB error");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Contact Submissions
+// ---------------------------------------------------------------------------
+
+const submission: ContactSubmission = {
+  id: "c1",
+  name: "Jane Doe",
+  email: "jane@example.com",
+  phone: "541-555-0100",
+  message: "Hello, I need help.",
+  created_at: "2026-01-01T00:00:00Z",
+};
+
+describe("createContactSubmission", () => {
+  it("inserts and returns the new submission", async () => {
+    const { builder } = setupClient({ data: submission, error: null });
+    const input = { name: "Jane Doe", email: "jane@example.com", message: "Hello." };
+
+    const result = await createContactSubmission(input);
+
+    expect(result).toEqual(submission);
+    expect(builder.insert).toHaveBeenCalledWith(input);
+    expect(builder.select).toHaveBeenCalled();
+    expect(builder.single).toHaveBeenCalled();
+  });
+
+  it("throws on error", async () => {
+    setupClient({ data: null, error: dbError });
+    await expect(
+      createContactSubmission({ name: "X", email: "x@example.com", message: "Hi." }),
+    ).rejects.toThrow("DB error");
   });
 });

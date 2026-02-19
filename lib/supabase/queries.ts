@@ -3,6 +3,8 @@ import type {
   Announcement,
   AnnouncementInsert,
   AnnouncementUpdate,
+  ContactInsert,
+  ContactSubmission,
   Event,
   EventInsert,
   EventUpdate,
@@ -228,4 +230,21 @@ export async function deleteEvent(id: string): Promise<void> {
   const supabase = await createClient();
   const { error } = await supabase.from("events").delete().eq("id", id);
   if (error) throw error;
+}
+
+// ============================================================
+// Contact Submissions
+// ============================================================
+
+export async function createContactSubmission(
+  submission: ContactInsert,
+): Promise<ContactSubmission> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("contact_submissions")
+    .insert(submission)
+    .select()
+    .single();
+  if (error) throw error;
+  return data;
 }

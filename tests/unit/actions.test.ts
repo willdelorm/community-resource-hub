@@ -14,11 +14,13 @@ vi.mock("@/lib/supabase/queries", () => ({
   createEvent: vi.fn(),
   updateEvent: vi.fn(),
   deleteEvent: vi.fn(),
+  createContactSubmission: vi.fn(),
 }));
 
 import { revalidatePath } from "next/cache";
 import {
   createAnnouncement,
+  createContactSubmission,
   createEvent,
   createResource,
   deleteAnnouncement,
@@ -35,12 +37,14 @@ import {
   deleteAnnouncementAction,
   deleteEventAction,
   deleteResourceAction,
+  submitContactFormAction,
   updateAnnouncementAction,
   updateEventAction,
   updateResourceAction,
 } from "@/app/actions/content";
 
 const mockRevalidatePath = vi.mocked(revalidatePath);
+const mockCreateContactSubmission = vi.mocked(createContactSubmission);
 const mockCreateResource = vi.mocked(createResource);
 const mockUpdateResource = vi.mocked(updateResource);
 const mockDeleteResource = vi.mocked(deleteResource);
@@ -297,5 +301,39 @@ describe("deleteEventAction", () => {
     const result = await deleteEventAction("e1");
 
     expect(result).toEqual({ error: "DB failure" });
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Contact Submissions
+// ---------------------------------------------------------------------------
+
+describe("submitContactFormAction", () => {
+  const data = { name: "Jane Doe", email: "jane@example.com", message: "Hi." };
+
+  it("calls createContactSubmission and returns success", async () => {
+    mockCreateContactSubmission.mockResolvedValueOnce({} as any);
+
+    const result = await submitContactFormAction(data);
+
+    expect(mockCreateContactSubmission).toHaveBeenCalledWith(data);
+    expect(mockRevalidatePath).not.toHaveBeenCalled();
+    expect(result).toEqual({ success: true });
+  });
+
+  it("returns error message when createContactSubmission throws an Error", async () => {
+    mockCreateContactSubmission.mockRejectedValueOnce(dbError);
+
+    const result = await submitContactFormAction(data);
+
+    expect(result).toEqual({ error: "DB failure" });
+  });
+
+  it("returns fallback message for non-Error throws", async () => {
+    mockCreateContactSubmission.mockRejectedValueOnce("unexpected");
+
+    const result = await submitContactFormAction(data);
+
+    expect(result).toEqual({ error: "Failed to send message" });
   });
 });

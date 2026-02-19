@@ -13,6 +13,26 @@ export type ResourceCategory =
 export type Database = {
   public: {
     Tables: {
+      contact_submissions: {
+        Row: {
+          id: string;
+          name: string;
+          email: string;
+          phone: string | null;
+          message: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          email: string;
+          phone?: string | null;
+          message: string;
+          created_at?: string;
+        };
+        Update: Record<string, never>;
+        Relationships: [];
+      };
       resources: {
         Row: {
           id: string;
@@ -147,6 +167,11 @@ export type ResourceUpdate =
 export type AnnouncementUpdate =
   Database["public"]["Tables"]["announcements"]["Update"];
 export type EventUpdate = Database["public"]["Tables"]["events"]["Update"];
+
+export type ContactSubmission =
+  Database["public"]["Tables"]["contact_submissions"]["Row"];
+export type ContactInsert =
+  Database["public"]["Tables"]["contact_submissions"]["Insert"];
 
 export const RESOURCE_CATEGORIES: ResourceCategory[] = [
   "Housing",

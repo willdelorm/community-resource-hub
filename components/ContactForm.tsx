@@ -1,20 +1,36 @@
 "use client";
 
 import { useState } from "react";
-
-export const forms = [
-  { name: "Communication", id: "communication" },
-  { name: "Event", id: "add-event" },
-  { name: "Add a Resource", id: "add-resource" },
-  { name: "Remove a Resource", id: "remove-resource" },
-];
+import { submitContactFormAction } from "@/app/actions/content";
 
 const ContactForm = () => {
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<{ success: true } | { error: string } | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setResult("Sending....");
+    const form = event.currentTarget;
+    const data = new FormData(form);
+
+    // Honeypot check — bots fill hidden fields
+    if (data.get("botcheck")) return;
+
+    setSubmitting(true);
+    setResult(null);
+
+    const result = await submitContactFormAction({
+      name: data.get("name") as string,
+      email: data.get("email") as string,
+      phone: (data.get("phone") as string) || null,
+      message: data.get("message") as string,
+    });
+
+    setSubmitting(false);
+    setResult(result);
+
+    if ("success" in result) {
+      form.reset();
+    }
   };
 
   return (
@@ -28,6 +44,8 @@ const ContactForm = () => {
           name="botcheck"
           className="hidden"
           style={{ display: "none" }}
+          tabIndex={-1}
+          autoComplete="off"
         />
         <>
           <input
@@ -86,37 +104,36 @@ const ContactForm = () => {
           />
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="email"
-          >
-            Organization
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3"
-            id="text"
-            type="text"
-            name="organization"
-            placeholder="CommonGround Collective"
-          />
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="message"
           >
             Message*
           </label>
           <textarea
             className="shadow border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight"
+            id="message"
             name="message"
             required
           />
           <button
-            className="shadow font-bold py-2 px-4 rounded w-full bg-orange-400 hover:bg-yellow-400 text-white"
+            className="shadow font-bold py-2 px-4 rounded w-full bg-orange-400 hover:bg-yellow-400 text-white disabled:opacity-50"
             type="submit"
+            disabled={submitting}
           >
-            Send message!
+            {submitting ? "Sending..." : "Send message!"}
           </button>
         </>
       </form>
-      <span>{result}</span>
+      {result && (
+        "success" in result ? (
+          <p className="text-green-600 font-medium text-center">
+            Message sent! We&apos;ll be in touch soon.
+          </p>
+        ) : (
+          <p className="text-red-600 font-medium text-center">
+            {result.error}
+          </p>
+        )
+      )}
     </div>
   );
 };

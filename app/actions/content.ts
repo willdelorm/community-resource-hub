@@ -2,6 +2,7 @@
 
 import {
   createAnnouncement,
+  createContactSubmission,
   createEvent,
   createResource,
   deleteAnnouncement,
@@ -14,6 +15,7 @@ import {
 import type {
   AnnouncementInsert,
   AnnouncementUpdate,
+  ContactInsert,
   EventInsert,
   EventUpdate,
   ResourceInsert,
@@ -131,5 +133,16 @@ export async function deleteEventAction(id: string): Promise<ActionResult> {
     return { success: true };
   } catch (err) {
     return { error: err instanceof Error ? err.message : "Failed to delete event" };
+  }
+}
+
+export async function submitContactFormAction(
+  data: ContactInsert,
+): Promise<ActionResult> {
+  try {
+    await createContactSubmission(data);
+    return { success: true };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : "Failed to send message" };
   }
 }
