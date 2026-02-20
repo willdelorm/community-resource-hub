@@ -24,7 +24,7 @@ The app is structured around Next.js route groups — `(public)` for unauthentic
 
 ### Supabase Auth + Middleware Route Protection
 
-Admin routes are protected by Next.js middleware that checks for a valid Supabase session on every request and redirects unauthenticated users to `/signin`. The auth flow supports email/password sign-in and email-link password recovery, routed through a `/auth/callback` handler. Admin accounts are provisioned directly in the Supabase dashboard — there's no public registration.
+Admin routes are protected by Next.js middleware that checks for a valid Supabase session on every request and redirects unauthenticated users to `/signin`. The auth flow supports email/password sign-in, email-link password recovery, and a dedicated `/update-password` page for completing a reset — all routed through a `/auth/callback` handler. Admin accounts are provisioned directly in the Supabase dashboard — there's no public registration.
 
 ### Typed Database Layer
 
@@ -74,12 +74,13 @@ community-resource-hub/
 │   │   └── donate/           # Donation options
 │   ├── (admin)/              # Admin route group (auth required)
 │   │   ├── signin/           # Sign-in and password recovery
+│   │   ├── update-password/  # Password reset completion
 │   │   └── dashboard/        # CMS dashboard
 │   │       ├── announcements/
 │   │       ├── events/
 │   │       └── resources/
 │   ├── actions/
-│   │   ├── auth.ts           # signIn, signOut, sendPasswordReset
+│   │   ├── auth.ts           # signIn, signOut, updatePassword, sendPasswordReset
 │   │   └── content.ts        # CRUD for resources, announcements, events
 │   └── auth/callback/        # Supabase email-link callback
 ├── components/
@@ -117,6 +118,7 @@ cp .env.example .env.local
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-key
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
 **Start the development server:**

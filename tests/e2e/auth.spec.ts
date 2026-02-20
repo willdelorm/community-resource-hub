@@ -36,3 +36,25 @@ test.describe("Auth flow", () => {
     ).toBeVisible();
   });
 });
+
+test.describe("Update password page", () => {
+  test("renders the update password form", async ({ page }) => {
+    await page.goto("/update-password");
+
+    await expect(page.getByLabel("New password")).toBeVisible();
+    await expect(page.getByLabel("Confirm new password")).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Update Password" }),
+    ).toBeVisible();
+  });
+
+  test("shows a mismatch error when passwords do not match", async ({ page }) => {
+    await page.goto("/update-password");
+
+    await page.getByLabel("New password").fill("password123");
+    await page.getByLabel("Confirm new password").fill("different456");
+    await page.getByRole("button", { name: "Update Password" }).click();
+
+    await expect(page.getByText("Passwords do not match.")).toBeVisible();
+  });
+});
