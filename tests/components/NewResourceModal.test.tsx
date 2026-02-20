@@ -1,4 +1,5 @@
 import { NewResourceModal } from "@/components/dashboard/NewResourceModal";
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
@@ -14,15 +15,25 @@ vi.mock("@/app/actions/content", () => ({
 // Radix Select is replaced with a native <select> to keep tests focused on
 // component logic rather than the Radix internals.
 vi.mock("@/components/ui/select", () => ({
-  Select: ({ onValueChange, value, children }: any) => (
+  Select: ({
+    onValueChange,
+    value,
+    children,
+  }: {
+    onValueChange: (value: string) => void;
+    value: string;
+    children: React.ReactNode;
+  }) => (
     <select id="category" value={value} onChange={(e) => onValueChange(e.target.value)}>
       {children}
     </select>
   ),
   SelectTrigger: () => null,
   SelectValue: () => null,
-  SelectContent: ({ children }: any) => <>{children}</>,
-  SelectItem: ({ value, children }: any) => <option value={value}>{children}</option>,
+  SelectContent: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  SelectItem: ({ value, children }: { value: string; children: React.ReactNode }) => (
+    <option value={value}>{children}</option>
+  ),
 }));
 
 import { createResourceAction } from "@/app/actions/content";

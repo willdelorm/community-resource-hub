@@ -1,3 +1,4 @@
+import type { Announcement, ContactSubmission, Event, Resource } from "@/lib/supabase/types";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("next/cache", () => ({
@@ -67,7 +68,7 @@ beforeEach(() => {
 
 describe("createResourceAction", () => {
   it("calls createResource, revalidates /dashboard, and returns success", async () => {
-    mockCreateResource.mockResolvedValueOnce({} as any);
+    mockCreateResource.mockResolvedValueOnce({} as Resource);
     const data = { name: "Food Bank", category: "Food" as const };
 
     const result = await createResourceAction(data);
@@ -98,7 +99,7 @@ describe("createResourceAction", () => {
 
 describe("updateResourceAction", () => {
   it("calls updateResource, revalidates both paths, and returns success", async () => {
-    mockUpdateResource.mockResolvedValueOnce({} as any);
+    mockUpdateResource.mockResolvedValueOnce({} as Resource);
 
     const result = await updateResourceAction("r1", { name: "Updated" });
 
@@ -152,7 +153,7 @@ describe("deleteResourceAction", () => {
 
 describe("createAnnouncementAction", () => {
   it("calls createAnnouncement, revalidates /dashboard, and returns success", async () => {
-    mockCreateAnnouncement.mockResolvedValueOnce({} as any);
+    mockCreateAnnouncement.mockResolvedValueOnce({} as Announcement);
     const data = { title: "Spring Fair", content: "Come join us." };
 
     const result = await createAnnouncementAction(data);
@@ -182,7 +183,7 @@ describe("createAnnouncementAction", () => {
 
 describe("updateAnnouncementAction", () => {
   it("calls updateAnnouncement, revalidates both paths, and returns success", async () => {
-    mockUpdateAnnouncement.mockResolvedValueOnce({} as any);
+    mockUpdateAnnouncement.mockResolvedValueOnce({} as Announcement);
 
     const result = await updateAnnouncementAction("a1", { title: "Updated" });
 
@@ -228,7 +229,7 @@ describe("deleteAnnouncementAction", () => {
 
 describe("createEventAction", () => {
   it("calls createEvent, revalidates /dashboard, and returns success", async () => {
-    mockCreateEvent.mockResolvedValueOnce({} as any);
+    mockCreateEvent.mockResolvedValueOnce({} as Event);
     const data = { title: "Community Meeting", start_date: "2026-03-01T18:00:00Z" };
 
     const result = await createEventAction(data);
@@ -264,7 +265,7 @@ describe("createEventAction", () => {
 
 describe("updateEventAction", () => {
   it("calls updateEvent, revalidates both paths, and returns success", async () => {
-    mockUpdateEvent.mockResolvedValueOnce({} as any);
+    mockUpdateEvent.mockResolvedValueOnce({} as Event);
 
     const result = await updateEventAction("e1", { title: "Updated" });
 
@@ -312,7 +313,7 @@ describe("submitContactFormAction", () => {
   const data = { name: "Jane Doe", email: "jane@example.com", message: "Hi." };
 
   it("calls createContactSubmission and returns success", async () => {
-    mockCreateContactSubmission.mockResolvedValueOnce({} as any);
+    mockCreateContactSubmission.mockResolvedValueOnce({} as ContactSubmission);
 
     const result = await submitContactFormAction(data);
 

@@ -2,6 +2,7 @@ import { EditResourceModal } from "@/components/dashboard/EditResourceModal";
 import type { Resource } from "@/lib/supabase/types";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import React from "react";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("next/navigation", () => ({
@@ -14,15 +15,25 @@ vi.mock("@/app/actions/content", () => ({
 
 // Replace Radix Select with a native <select> for straightforward testing.
 vi.mock("@/components/ui/select", () => ({
-  Select: ({ onValueChange, value, children }: any) => (
+  Select: ({
+    onValueChange,
+    value,
+    children,
+  }: {
+    onValueChange: (value: string) => void;
+    value: string;
+    children: React.ReactNode;
+  }) => (
     <select id="category" value={value} onChange={(e) => onValueChange(e.target.value)}>
       {children}
     </select>
   ),
   SelectTrigger: () => null,
   SelectValue: () => null,
-  SelectContent: ({ children }: any) => <>{children}</>,
-  SelectItem: ({ value, children }: any) => <option value={value}>{children}</option>,
+  SelectContent: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  SelectItem: ({ value, children }: { value: string; children: React.ReactNode }) => (
+    <option value={value}>{children}</option>
+  ),
 }));
 
 import { updateResourceAction } from "@/app/actions/content";
