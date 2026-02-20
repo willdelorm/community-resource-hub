@@ -3,13 +3,10 @@ const Story = () => {
     <main className="w-full">
       <section className="flex justify-center items-center py-12">
         <h1 className={`text-4xl font-black uppercase text-center filter`}>
-          Story
+          Our Story
         </h1>
       </section>
-      <section className="px-6 my-12 mx-auto max-w-4xl">
-        <h2 className="text-2xl font-bold text-center mb-3 drop-shadow-md">
-          Our Story
-        </h2>
+      <section className="px-12 my-12 mx-auto max-w-4xl">
         <p className="mb-3">
           The Community Resource Hub was founded in 2018 by a small group of
           neighbors who noticed that too many people in their city were

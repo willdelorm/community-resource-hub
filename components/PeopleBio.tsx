@@ -16,7 +16,7 @@ const PeopleBio = ({ profile }: { profile: Profile }) => {
         src={photo}
         width={300}
         height={300}
-        alt={name}
+        alt="profile photo from unsplash"
         className="w-100 md:max-w-xs mx-auto object-cover"
       />
       <div className="px-2 py-5 ">

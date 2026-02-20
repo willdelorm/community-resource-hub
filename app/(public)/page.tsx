@@ -24,12 +24,13 @@ export default async function Home() {
   return (
     <main className="w-full">
       <section className="h-96 w-full flex justify-center items-center relative">
-        <h1 className="text-7xl text-center font-bold uppercase text-white filter drop-shadow z-10">
+        <h1 className="text-7xl text-center font-bold text-white filter drop-shadow z-10">
           CommonGround Collective
         </h1>
         <Image
           src="/10-2500x1667.jpg"
           fill={true}
+          sizes="100vw"
           alt="placeholder hero image"
         />
       </section>
@@ -56,7 +57,7 @@ export default async function Home() {
           ))}
         </div>
       </section>
-      <section className="dark-bg w-full py-10">
+      <section className="dark-bg w-full mx-auto max-w-2xl py-10">
         <div className="mx-auto flex flex-col items-center gap-4 px-6 sm:flex-row sm:justify-center">
           {pageButtons.map(({ title, link }) => (
             <Button

@@ -5,9 +5,9 @@ import NavMenu from "./NavMenu";
 const Navbar = () => {
   return (
     <header className="w-full">
-      <nav className="flex justify-between items-center max-w-7xl mx-auto p-6 lg:px-8">
+      <nav className="flex justify-between items-center max-w-7xl mx-auto px-5 py-2 lg:px-8">
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-5 p-0.5">
+          <Link href="/" className="p-0.5">
             <span className="sr-only">CommonGround Collective</span>
             <Image
               className="h-14 w-auto"

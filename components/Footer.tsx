@@ -32,7 +32,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-400 pt-6 text-center text-xs text-gray-500">
-          <p>Created by Will Delorm</p>
+          <p>Created by <a href="https://willdelorm.com" className="hover:text-gray-900 transition-colors">Will Delorm</a></p>
         </div>
       </div>
     </footer>
