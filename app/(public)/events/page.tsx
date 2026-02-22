@@ -35,7 +35,7 @@ export default async function Events() {
           Events
         </h1>
       </section>
-      <section className="flex flex-col justify-center items-center p-6">
+      <section className="flex flex-col justify-center items-center px-4 sm:px-6 py-6">
         <div className="max-w-3xl w-full py-6">
           {events.length === 0 ? (
             <p className="text-center text-gray-500 py-8">

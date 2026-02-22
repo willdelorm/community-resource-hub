@@ -28,8 +28,8 @@ const SignInCard = ({ demoEmail, demoPassword }: SignInCardProps) => {
   const showDemo = !!(demoEmail && demoPassword);
 
   return (
-    <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-      <h1 className="text-3xl font-black uppercase text-center mb-1">
+    <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+      <h1 className="text-2xl sm:text-3xl font-black uppercase text-center mb-1">
         {title}
       </h1>
       <p className="text-center text-gray-500 mb-6">{subtitle}</p>
@@ -48,11 +48,11 @@ const SignInCard = ({ demoEmail, demoPassword }: SignInCardProps) => {
             Demo Access
           </p>
           <div className="space-y-1 text-sm text-amber-900">
-            <div className="flex justify-between">
+            <div className="flex flex-col gap-1 sm:flex-row sm:justify-between">
               <span className="text-amber-600">Email</span>
               <span className="font-mono">{demoEmail}</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex flex-col gap-1 sm:flex-row sm:justify-between">
               <span className="text-amber-600">Password</span>
               <span className="font-mono">{demoPassword}</span>
             </div>

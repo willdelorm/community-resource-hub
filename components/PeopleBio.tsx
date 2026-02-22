@@ -17,7 +17,7 @@ const PeopleBio = ({ profile }: { profile: Profile }) => {
         width={300}
         height={300}
         alt="profile photo from unsplash"
-        className="w-100 md:max-w-xs mx-auto object-cover"
+        className="w-full sm:w-80 md:max-w-xs mx-auto object-cover"
       />
       <div className="px-2 py-5 ">
         <h3 className="font-semibold text-lg">

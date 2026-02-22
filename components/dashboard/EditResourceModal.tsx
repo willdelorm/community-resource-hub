@@ -187,15 +187,16 @@ export function EditResourceModal({ resource }: EditResourceModalProps) {
             </Label>
           </div>
 
-          <div className="flex justify-end gap-2 pt-2">
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-2">
             <Button
               type="button"
               variant="outline"
+              className="w-full sm:w-auto"
               onClick={() => handleOpenChange(false)}
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" disabled={isPending} className="w-full sm:w-auto">
               {isPending ? "Saving…" : "Save"}
             </Button>
           </div>

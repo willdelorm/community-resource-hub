@@ -32,7 +32,7 @@ const People = () => {
           People
         </h1>
       </section>
-      <section className="px-6 my-12 mx-auto max-w-4xl">
+      <section className="px-4 sm:px-6 my-6 sm:my-12 mx-auto max-w-4xl">
         {peopleProfiles
           .map((profile, index) => (
             <PeopleBio key={index} profile={profile} />

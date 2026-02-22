@@ -72,15 +72,9 @@ const AnnouncementsPage = async () => {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between gap-3">
         <div>
-          <Link
-            href="/dashboard"
-            className="text-sm text-slate-500 hover:text-slate-800 transition-colors"
-          >
-            ← Dashboard
-          </Link>
-          <h1 className="mt-1 text-2xl font-black uppercase tracking-wide text-slate-800">
+          <h1 className="text-xl sm:text-2xl font-black uppercase tracking-wide text-slate-800">
             Announcements
           </h1>
           <p className="text-sm text-slate-500 mt-1">
@@ -88,7 +82,15 @@ const AnnouncementsPage = async () => {
             {announcements.length === 1 ? "announcement" : "announcements"} total
           </p>
         </div>
-        {!isDemo && <NewAnnouncementModal />}
+        <div className="flex flex-col items-end gap-2 flex-shrink-0">
+          <Link
+            href="/dashboard"
+            className="text-sm text-slate-500 hover:text-slate-800 transition-colors"
+          >
+            ← Dashboard
+          </Link>
+          {!isDemo && <NewAnnouncementModal />}
+        </div>
       </div>
 
       <hr className="border-slate-300" />

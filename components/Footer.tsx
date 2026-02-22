@@ -3,7 +3,7 @@
 const Footer = () => {
   return (
     <footer className="w-full bg-gray-300 text-gray-600">
-      <div className="mx-auto max-w-2xl px-6 py-12">
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8 sm:py-12">
         <div className="mb-8">
           <h2 className="text-xl font-black uppercase tracking-wide text-gray-900">
             CommonGround Collective
@@ -12,9 +12,9 @@ const Footer = () => {
             Connecting people with community resources.
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-8 border-t border-gray-400 pt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 border-t border-gray-400 pt-8">
           <div className="flex flex-col gap-1">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-600">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide sm:tracking-widest text-gray-600">
               Explore
             </p>
             <a href="/events" className="text-sm hover:text-gray-900 transition-colors">Events</a>
@@ -22,7 +22,7 @@ const Footer = () => {
             <a href="/donate" className="text-sm hover:text-gray-900 transition-colors">Donate</a>
           </div>
           <div className="flex flex-col gap-1">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-600">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide sm:tracking-widest text-gray-600">
               About
             </p>
             <a href="/about/story" className="text-sm hover:text-gray-900 transition-colors">Story</a>

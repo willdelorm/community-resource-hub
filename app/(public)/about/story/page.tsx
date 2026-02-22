@@ -6,7 +6,7 @@ const Story = () => {
           Our Story
         </h1>
       </section>
-      <section className="px-12 my-12 mx-auto max-w-4xl">
+      <section className="px-4 sm:px-8 md:px-12 my-6 sm:my-12 mx-auto max-w-4xl">
         <p className="mb-3">
           The Community Resource Hub was founded in 2018 by a small group of
           neighbors who noticed that too many people in their city were

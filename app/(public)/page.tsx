@@ -23,8 +23,8 @@ export default async function Home() {
   
   return (
     <main className="w-full">
-      <section className="h-96 w-full flex justify-center items-center relative">
-        <h1 className="text-7xl text-center font-bold text-white filter drop-shadow z-10">
+      <section className="h-56 sm:h-72 md:h-96 w-full flex justify-center items-center relative">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl text-center font-bold text-white filter drop-shadow z-10 px-4">
           CommonGround Collective
         </h1>
         <Image
@@ -63,7 +63,7 @@ export default async function Home() {
             <Button
               asChild
               key={title}
-              className="flex-1 bg-orange-400 hover:bg-yellow-400 shadow-md"
+              className="w-full flex-1 bg-orange-400 hover:bg-yellow-400 shadow-md"
             >
               <Link href={link}>{title}</Link>
             </Button>
@@ -81,7 +81,7 @@ export default async function Home() {
           </p>
           <Button
             asChild
-            className="mt-2 bg-orange-400 px-8 py-5 text-base font-bold text-white shadow-lg hover:bg-yellow-400"
+            className="mt-2 bg-orange-400 px-6 sm:px-8 py-3 sm:py-5 text-base font-bold text-white shadow-lg hover:bg-yellow-400"
           >
             <Link href="/donate">Donate Today</Link>
           </Button>

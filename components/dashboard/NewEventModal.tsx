@@ -107,7 +107,7 @@ export function NewEventModal() {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
             <FormInput
               id="start_date"
               label="Start *"
@@ -152,15 +152,16 @@ export function NewEventModal() {
             </Label>
           </div>
 
-          <div className="flex justify-end gap-2 pt-2">
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-2">
             <Button
               type="button"
               variant="outline"
+              className="w-full sm:w-auto"
               onClick={() => handleOpenChange(false)}
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isPending || !startDate}>
+            <Button type="submit" disabled={isPending || !startDate} className="w-full sm:w-auto">
               {isPending ? "Saving…" : "Save"}
             </Button>
           </div>

@@ -16,7 +16,7 @@ export default async function AdminLayout({
   return (
     <div className="min-h-screen flex flex-col bg-slate-100 font-sans">
       <header className="bg-slate-900 text-white">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-y-2">
           <div className="flex items-center gap-3">
             <span className="text-lg font-black uppercase tracking-widest">
               CommonGround
@@ -42,7 +42,7 @@ export default async function AdminLayout({
 
       {isDemo && (
         <div className="bg-amber-50 border-b border-amber-200">
-          <div className="max-w-7xl mx-auto px-6 py-2 flex items-center gap-2 text-sm text-amber-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-2 text-sm text-amber-800">
             <span className="font-semibold">Demo mode</span>
             <span className="text-amber-600">—</span>
             <span>You&apos;re viewing a read-only preview. All edits are disabled.</span>
@@ -50,7 +50,7 @@ export default async function AdminLayout({
         </div>
       )}
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
         {children}
       </main>
     </div>

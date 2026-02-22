@@ -102,7 +102,7 @@ const Dashboard = async () => {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-black uppercase tracking-wide text-slate-800">
+        <h1 className="text-xl sm:text-2xl font-black uppercase tracking-wide text-slate-800">
           Dashboard
         </h1>
         <p className="text-sm text-slate-500 mt-1">Manage site content below.</p>
@@ -121,7 +121,7 @@ const Dashboard = async () => {
             emptyMessage="No resources yet."
           />
         </CardContent>
-        <CardFooter className="flex justify-between">
+        <CardFooter className="flex flex-row items-center justify-between gap-2">
           {!isDemo && <NewResourceModal />}
           <Link
             href="/dashboard/resources"
@@ -143,7 +143,7 @@ const Dashboard = async () => {
             emptyMessage="No announcements yet."
           />
         </CardContent>
-        <CardFooter className="flex justify-between">
+        <CardFooter className="flex flex-row items-center justify-between gap-2">
           {!isDemo && <NewAnnouncementModal />}
           <Link
             href="/dashboard/announcements"
@@ -165,7 +165,7 @@ const Dashboard = async () => {
             emptyMessage="No events yet."
           />
         </CardContent>
-        <CardFooter className="flex justify-between">
+        <CardFooter className="flex flex-row items-center justify-between gap-2">
           {!isDemo && <NewEventModal />}
           <Link
             href="/dashboard/events"

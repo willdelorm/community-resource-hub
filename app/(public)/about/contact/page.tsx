@@ -8,13 +8,13 @@ const Contact = () => {
           Contact us
         </h1>
       </section>
-      <section className="w-full mx-auto flex flex-col justify-center items-center p-6">
+      <section className="w-full mx-auto flex flex-col justify-center items-center px-4 sm:px-6 py-4 sm:py-6">
         <p className="mb-6">
           Please fill out the form below. We will respond as soon as we are
           able.
         </p>
       </section>
-      <section className="px-6 mb-12">
+      <section className="px-4 sm:px-6 mb-12">
         <ContactForm />
       </section>
     </main>

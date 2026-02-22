@@ -46,7 +46,7 @@ export function ResourcesTable({ resources }: ResourcesTableProps) {
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value as ResourceCategory | "")}
-          className="h-9 rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 sm:w-48"
+          className="h-9 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 sm:w-48"
         >
           <option value="">All categories</option>
           {RESOURCE_CATEGORIES.map((cat) => (
@@ -62,6 +62,7 @@ export function ResourcesTable({ resources }: ResourcesTableProps) {
           No resources match your search.
         </p>
       ) : (
+        <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
@@ -136,7 +137,8 @@ export function ResourcesTable({ resources }: ResourcesTableProps) {
             ))}
           </TableBody>
         </Table>
-      )}
+        </div>
+)}
 
       <p className="text-sm text-gray-400">
         Showing {filtered.length} of {resources.length} resources

@@ -11,16 +11,16 @@ export default async function Resources() {
           Resources
         </h1>
       </section>
-      <section className="px-6 mb-3 text-center">
+      <section className="px-4 sm:px-6 mb-3 text-center">
         <p>
           Here you can find local, state, and national organizations that serve
           the area.
         </p>
       </section>
-      <section className="px-6 mb-6">
+      <section className="px-4 sm:px-6 mb-6">
         <ResourcesTable resources={resources} />
       </section>
-      <section className="px-6 mb-6 md:mb-24 text-center">
+      <section className="px-4 sm:px-6 mb-6 sm:mb-12 md:mb-24 text-center">
         <p>
           To add a resource to this list, please contact us{" "}
           <a className="underline" href="/about/contact">

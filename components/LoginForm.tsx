@@ -56,7 +56,7 @@ const LoginForm = ({ onForgotPassword }: LoginFormProps) => {
         placeholder="••••••••"
       />
 
-      <div className="flex justify-end">
+      <div className="flex justify-center sm:justify-end">
         <button
           type="button"
           onClick={onForgotPassword}

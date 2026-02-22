@@ -36,7 +36,7 @@ const ContactForm = () => {
   return (
     <div className="w-full max-w-lg mx-auto text-black">
       <form
-        className="bg-white px-8 pt-6 pb-8 mb-4 rounded"
+        className="bg-white px-4 sm:px-8 pt-4 sm:pt-6 pb-6 sm:pb-8 mb-4 rounded"
         onSubmit={onSubmit}
       >
         <input
