@@ -1,5 +1,6 @@
 "use server";
 
+import { isDemoUser } from "@/lib/supabase/demo";
 import {
   createAnnouncement,
   createContactSubmission,
@@ -12,7 +13,6 @@ import {
   updateEvent,
   updateResource,
 } from "@/lib/supabase/queries";
-import { isDemoUser } from "@/lib/supabase/demo";
 import type {
   AnnouncementInsert,
   AnnouncementUpdate,
@@ -153,6 +153,10 @@ export async function submitContactFormAction(
     await createContactSubmission(data);
     return { success: true };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : "Failed to send message" };
+    const message =
+      err instanceof Error
+        ? err.message
+        : (err as { message?: string })?.message ?? "Failed to send message";
+    return { error: message };
   }
 }
