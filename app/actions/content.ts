@@ -3,7 +3,6 @@
 import { isDemoUser } from "@/lib/supabase/demo";
 import {
   createAnnouncement,
-  createContactSubmission,
   createEvent,
   createResource,
   deleteAnnouncement,
@@ -13,6 +12,7 @@ import {
   updateEvent,
   updateResource,
 } from "@/lib/supabase/queries";
+import { createAdminClient } from "@/lib/supabase/admin";
 import type {
   AnnouncementInsert,
   AnnouncementUpdate,
@@ -150,7 +150,9 @@ export async function submitContactFormAction(
   data: ContactInsert,
 ): Promise<ActionResult> {
   try {
-    await createContactSubmission(data);
+    const supabase = createAdminClient();
+    const { error } = await supabase.from("contact_submissions").insert(data);
+    if (error) throw error;
     return { success: true };
   } catch (err) {
     const message =
