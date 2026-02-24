@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const Donate = () => {
   return (
@@ -18,9 +19,9 @@ const Donate = () => {
           little as $1 on Ko-fi.
         </p>
         <div className="flex flex-col sm:flex-row justify-center items-center gap-3 px-6">
-          <Button className="paypal bg-blue-800 hover:bg-blue-700 rounded-3xl w-full sm:w-auto sm:min-w-32">PayPal</Button>
-          <Button className="venmo bg-blue-500 hover:bg-blue-400 rounded-3xl w-full sm:w-auto sm:min-w-32">Venmo</Button>
-          <Button className="kofi bg-amber-600 hover:bg-amber-500 rounded-3xl w-full sm:w-auto sm:min-w-32">Ko-fi</Button>
+          <Button className="paypal bg-blue-800 hover:bg-blue-700 rounded-3xl w-full sm:w-auto sm:min-w-32"><Link href="#paypal">PayPal</Link></Button>
+          <Button className="venmo bg-blue-500 hover:bg-blue-400 rounded-3xl w-full sm:w-auto sm:min-w-32"><Link href="#venmo">Venmo</Link></Button>
+          <Button className="kofi bg-amber-600 hover:bg-amber-500 rounded-3xl w-full sm:w-auto sm:min-w-32"><Link href="#kofi">Ko-fi</Link></Button>
         </div>
       </section>
     </main>
