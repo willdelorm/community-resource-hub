@@ -1,8 +1,8 @@
 "use server";
 
+import { isDemoUser } from "@/lib/supabase/demo";
 import {
   createAnnouncement,
-  createContactSubmission,
   createEvent,
   createResource,
   deleteAnnouncement,
@@ -12,7 +12,7 @@ import {
   updateEvent,
   updateResource,
 } from "@/lib/supabase/queries";
-import { isDemoUser } from "@/lib/supabase/demo";
+import { createAdminClient } from "@/lib/supabase/admin";
 import type {
   AnnouncementInsert,
   AnnouncementUpdate,
@@ -150,9 +150,15 @@ export async function submitContactFormAction(
   data: ContactInsert,
 ): Promise<ActionResult> {
   try {
-    await createContactSubmission(data);
+    const supabase = createAdminClient();
+    const { error } = await supabase.from("contact_submissions").insert(data);
+    if (error) throw error;
     return { success: true };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : "Failed to send message" };
+    const message =
+      err instanceof Error
+        ? err.message
+        : (err as { message?: string })?.message ?? "Failed to send message";
+    return { error: message };
   }
 }
