@@ -1,5 +1,7 @@
 # Community Resource Hub
 
+![Community Resource Hub landing page](docs/screenshot-landing-page.png)
+
 A full-stack CMS platform that helps nonprofits and community organizations connect members with local services. Built to solve a real problem: small orgs often lack the budget and technical resources to maintain a living, searchable directory of resources and events.
 
 **Live demo:** [community-resource-hub-five.vercel.app](https://community-resource-hub-five.vercel.app/)
@@ -34,13 +36,15 @@ All database interactions are centralized in `lib/supabase/queries.ts` and typed
 
 A demo account pattern lets anyone explore the admin dashboard without write access. Mutation server actions check the current user's email against a `DEMO_ACCOUNT_EMAIL` environment variable and return a descriptive error instead of writing to the database. The UI displays a visible indicator when in demo mode.
 
+![Community Resource Hub admin demo page](docs/screenshot-admin-page.png)
+
 ### Testing
 
-| Layer | Tools | Coverage |
-|---|---|---|
-| Component | Vitest + React Testing Library | Rendering, interactions, form behavior |
-| Unit | Vitest | Server actions and database query functions |
-| E2E | Playwright | Auth redirect, dashboard CRUD flows |
+| Layer     | Tools                          | Coverage                                    |
+| --------- | ------------------------------ | ------------------------------------------- |
+| Component | Vitest + React Testing Library | Rendering, interactions, form behavior      |
+| Unit      | Vitest                         | Server actions and database query functions |
+| E2E       | Playwright                     | Auth redirect, dashboard CRUD flows         |
 
 Server actions and server components are tested at the E2E layer; client components are tested in isolation with mocked action boundaries.
 
@@ -48,16 +52,16 @@ Server actions and server components are tested at the E2E layer; client compone
 
 ## Tech Stack
 
-| | |
-|---|---|
-| Framework | [Next.js 16](https://nextjs.org/) (App Router) |
-| Language | [TypeScript 5](https://www.typescriptlang.org/) |
-| Styling | [Tailwind CSS 4](https://tailwindcss.com/) |
-| UI Components | [shadcn/ui](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/) |
-| Backend | Next.js Server Actions |
-| Database & Auth | [Supabase](https://supabase.com/) (PostgreSQL) |
-| Testing | [Vitest](https://vitest.dev/), [React Testing Library](https://testing-library.com/), [Playwright](https://playwright.dev/) |
-| Deployment | [Vercel](https://vercel.com/) |
+|                 |                                                                                                                             |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Framework       | [Next.js 16](https://nextjs.org/) (App Router)                                                                              |
+| Language        | [TypeScript 5](https://www.typescriptlang.org/)                                                                             |
+| Styling         | [Tailwind CSS 4](https://tailwindcss.com/)                                                                                  |
+| UI Components   | [shadcn/ui](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/)                                                 |
+| Backend         | Next.js Server Actions                                                                                                      |
+| Database & Auth | [Supabase](https://supabase.com/) (PostgreSQL)                                                                              |
+| Testing         | [Vitest](https://vitest.dev/), [React Testing Library](https://testing-library.com/), [Playwright](https://playwright.dev/) |
+| Deployment      | [Vercel](https://vercel.com/)                                                                                               |
 
 ---
 
@@ -133,14 +137,14 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm start` | Run production build |
-| `npm run lint` | Run ESLint |
-| `npm test` | Run component/unit tests (watch) |
-| `npm run test:run` | Run component/unit tests (single pass) |
-| `npm run test:ui` | Open Vitest browser UI |
-| `npm run test:e2e` | Run Playwright E2E tests |
-| `npm run test:e2e:ui` | Open Playwright interactive UI |
+| Command               | Description                            |
+| --------------------- | -------------------------------------- |
+| `npm run dev`         | Start development server               |
+| `npm run build`       | Build for production                   |
+| `npm start`           | Run production build                   |
+| `npm run lint`        | Run ESLint                             |
+| `npm test`            | Run component/unit tests (watch)       |
+| `npm run test:run`    | Run component/unit tests (single pass) |
+| `npm run test:ui`     | Open Vitest browser UI                 |
+| `npm run test:e2e`    | Run Playwright E2E tests               |
+| `npm run test:e2e:ui` | Open Playwright interactive UI         |
