@@ -2,16 +2,16 @@ name: Keep Supabase Alive
 
 on:
   schedule:
-    - cron: '0 12 * * 1'  # Every Monday at 12:00 UTC
+    - cron: '0 12 */3 * *'  # Every 3 days
   workflow_dispatch:       # Allow manual trigger
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase
+      - name: Ping Supabase REST API
         run: |
-          curl -sf \
-            "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/?apikey=${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}" \
-            || echo "Ping failed — check Supabase URL and key secrets"
+          curl -s -o /dev/null -w "%{http_code}\n" \
+            "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/<a_public_table>?select=id&limit=1" \
+            -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}"
